@@ -281,7 +281,7 @@ const { product, settings, allOrders } = ssrData || { product: {}, settings: {},
         window.currentOrderSlide = (n) => window.showOrderSlides(orderSlideIndex = n);
 
         
-        let DELIVERY_FEE = 70;
+        let DELIVERY_FEE = 0;
         let prices = {
             small_56: 300,
             big_56: 400,
@@ -357,7 +357,7 @@ const { product, settings, allOrders } = ssrData || { product: {}, settings: {},
             prices.big_56 = Number(settings.priceLarge56) || prices.big_56;
             prices.small_32 = Number(settings.priceSmall32) || prices.small_32;
             prices.big_32 = Number(settings.priceLarge32) || prices.big_32;
-            DELIVERY_FEE = Number(settings.deliveryCharge) || DELIVERY_FEE;
+            DELIVERY_FEE = (settings.deliveryCharge !== undefined && settings.deliveryCharge !== null && settings.deliveryCharge !== '') ? Number(settings.deliveryCharge) : DELIVERY_FEE;
 
             sizeImageUrls.small = settings.smallSizeImageUrl || '';
             sizeImageUrls.big = settings.largeSizeImageUrl || '';
@@ -628,7 +628,18 @@ const { product, settings, allOrders } = ssrData || { product: {}, settings: {},
             const total = productPrice + DELIVERY_FEE;
 
             dynamicPriceEl.textContent = productPrice;
-            deliveryFeeEl.textContent = DELIVERY_FEE;
+            
+            // Handle free delivery display
+            const deliveryFeeRow = document.getElementById('deliveryFeeRow');
+            if (DELIVERY_FEE === 0) {
+                if (deliveryFeeRow) {
+                    deliveryFeeRow.innerHTML = '<span class="font-semibold text-green-600">🚚 সারা বাংলাদেশে ফ্রি হোম ডেলিভারি</span><span id="deliveryFee" class="hidden">0</span>';
+                }
+            } else {
+                if (deliveryFeeRow) {
+                    deliveryFeeRow.innerHTML = `ডেলিভারি চার্জ: <span id="deliveryFee" class="font-semibold">${DELIVERY_FEE}</span> টাকা`;
+                }
+            }
             totalPriceEl.textContent = total;
             
             const sizeLabelEl = document.querySelector(`label[for="size_${selectedSize}"]`);
