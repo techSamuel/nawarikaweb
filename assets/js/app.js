@@ -633,7 +633,7 @@ function updatePrice() {
     const deliveryFeeRow = document.getElementById('deliveryFeeRow');
     if (DELIVERY_FEE === 0) {
         if (deliveryFeeRow) {
-            deliveryFeeRow.innerHTML = '<span class="font-semibold text-green-600">🚚 সারা বাংলাদেশে ফ্রি হোম ডেলিভারি</span><span class="font-bold text-red-600 bg-yellow-200 px-3 py-1 rounded-full text-sm inline-block shadow-sm">🎁 ফ্রি ওমরাহ কুপন</span><span id="deliveryFee" class="hidden">0</span>';
+            deliveryFeeRow.innerHTML = '<span class="font-semibold text-green-600">🚚 সারা বাংলাদেশে ফ্রি হোম ডেলিভারি</span><span class="font-bold text-red-600 bg-yellow-200 px-3 py-1 rounded-full text-lg inline-block shadow-sm">🎁 ফ্রি ওমরাহ কুপন</span><span id="deliveryFee" class="hidden">0</span>';
             deliveryFeeRow.classList.add("flex", "flex-col", "items-center", "gap-1");
         }
     } else {
