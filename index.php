@@ -502,7 +502,7 @@ $conn->close();
   - The 'defer' attribute ensures this script runs after the HTML is parsed
     and doesn't block the page from rendering.
 -->
-    <script src="assets/js/app.js" type="module" defer></script>
+    <script src="assets/js/app.js?v=<?php echo time(); ?>" type="module" defer></script>
 
 </body>
 
