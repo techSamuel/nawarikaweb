@@ -182,12 +182,14 @@ function setupSlider(sliderId, slideClassName, dotsId, slideIndexVarName) {
     const slider = document.getElementById(sliderId);
     const dotsContainer = document.getElementById(dotsId);
     if (!slider || !dotsContainer) return () => { };
-    slider.innerHTML = '';
-    dotsContainer.innerHTML = '';
-    const slideElements = [];
+
     let imageUrls = [];
 
     return (urls) => {
+        slider.innerHTML = '';
+        dotsContainer.innerHTML = '';
+        const slideElements = [];
+
         if (typeof urls === 'string') {
             try { urls = JSON.parse(urls); } catch (e) { urls = []; }
         }
