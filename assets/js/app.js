@@ -703,6 +703,28 @@ function updatePrice() {
     if (window.productImages && window.renderImageSlider) {
         window.renderImageSlider(window.productImages[selectedQuantity] || []);
     }
+
+    const sliderBtn32 = document.getElementById('btn-slider-32');
+    const sliderBtn56 = document.getElementById('btn-slider-56');
+    const sliderBtn99 = document.getElementById('btn-slider-99');
+    
+    if (sliderBtn32 && sliderBtn56 && sliderBtn99) {
+        [sliderBtn32, sliderBtn56, sliderBtn99].forEach(btn => {
+            btn.classList.remove('bg-green-600', 'text-white');
+            btn.classList.add('bg-gray-200', 'text-gray-800');
+        });
+        
+        if (selectedQuantity === '32') {
+            sliderBtn32.classList.remove('bg-gray-200', 'text-gray-800');
+            sliderBtn32.classList.add('bg-green-600', 'text-white');
+        } else if (selectedQuantity === '56') {
+            sliderBtn56.classList.remove('bg-gray-200', 'text-gray-800');
+            sliderBtn56.classList.add('bg-green-600', 'text-white');
+        } else if (selectedQuantity === '99') {
+            sliderBtn99.classList.remove('bg-gray-200', 'text-gray-800');
+            sliderBtn99.classList.add('bg-green-600', 'text-white');
+        }
+    }
 }
 
 const wheel = document.getElementById('wheel');
@@ -989,6 +1011,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAndApplyInitialData();
     trackVisitor();
     updatePrice();
+
+    const sliderBtn32 = document.getElementById('btn-slider-32');
+    const sliderBtn56 = document.getElementById('btn-slider-56');
+    const sliderBtn99 = document.getElementById('btn-slider-99');
+
+    if (sliderBtn32) sliderBtn32.addEventListener('click', () => { document.getElementById('quantity_32').checked = true; updatePrice(); });
+    if (sliderBtn56) sliderBtn56.addEventListener('click', () => { document.getElementById('quantity_56').checked = true; updatePrice(); });
+    if (sliderBtn99) sliderBtn99.addEventListener('click', () => { document.getElementById('quantity_99').checked = true; updatePrice(); });
 
     // --- START: Barikoi Autocomplete Logic (Updated with Key Rotation) ---
     const addressTextarea = document.getElementById('address');

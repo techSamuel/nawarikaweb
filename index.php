@@ -207,6 +207,11 @@ $conn->close();
                 <!-- These containers are now empty, JS will "hydrate" them -->
                 <div id="imageSlider" class="slider-container shadow-lg"></div>
                 <div id="imageDots" class="dots-container"></div>
+                <div id="slider-variation-buttons" class="flex justify-center gap-2 mt-4 mb-6">
+                    <button type="button" id="btn-slider-32" class="slider-var-btn bg-green-600 text-white px-4 py-2 rounded-md transition font-semibold">৩২ পিস</button>
+                    <button type="button" id="btn-slider-56" class="slider-var-btn bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded-md transition font-semibold">৫৬ পিস</button>
+                    <button type="button" id="btn-slider-99" class="slider-var-btn bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded-md transition font-semibold">৯৯ টি নাম</button>
+                </div>
                 <div id="videoSlider" class="slider-container shadow-lg aspect-9-16"></div>
                 <div id="videoDots" class="dots-container"></div>
 
