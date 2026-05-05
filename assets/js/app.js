@@ -173,29 +173,26 @@ function getYouTubeEmbedUrl(originalUrl) {
     return null;
 }
 
-let imageSlideIndex = 1;
-let videoSlideIndex = 1;
 let feedbackSlideIndex = 1;
 let orderSlideIndex = 1;
 
-function setupSlider(sliderId, slideClassName, dotsId, slideIndexVarName) {
+function setupSlider(sliderId, slideClassName, dotsId) {
     const slider = document.getElementById(sliderId);
     const dotsContainer = document.getElementById(dotsId);
     if (!slider || !dotsContainer) return () => { };
-
-    let imageUrls = [];
 
     return (urls) => {
         slider.innerHTML = '';
         dotsContainer.innerHTML = '';
         const slideElements = [];
+        let currentSlideIndex = 1;
 
         if (typeof urls === 'string') {
             try { urls = JSON.parse(urls); } catch (e) { urls = []; }
         }
         if (!Array.isArray(urls)) urls = [];
 
-        imageUrls = urls;
+        let imageUrls = urls;
         if (!urls || urls.length === 0) {
             slider.style.display = 'none';
             dotsContainer.style.display = 'none';
@@ -203,6 +200,36 @@ function setupSlider(sliderId, slideClassName, dotsId, slideIndexVarName) {
         }
         slider.style.display = 'block';
         dotsContainer.style.display = 'block';
+
+        const showSlidesFn = function(n, isRelative = false) {
+            if (isRelative) {
+                currentSlideIndex += n;
+            } else {
+                currentSlideIndex = n;
+            }
+
+            if (currentSlideIndex > slideElements.length) { currentSlideIndex = 1; }
+            if (currentSlideIndex < 1) { currentSlideIndex = slideElements.length; }
+
+            slideElements.forEach(slide => {
+                const video = slide.querySelector('video');
+                if (video) video.pause();
+                const iframe = slide.querySelector('iframe');
+                if (iframe) iframe.src = iframe.src;
+                slide.style.display = "none";
+            });
+
+            let dots = dotsContainer.getElementsByClassName("dot");
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            if (slideElements.length > 0) {
+                slideElements[currentSlideIndex - 1].style.display = "block";
+                if (dots.length > 0) dots[currentSlideIndex - 1].className += " active";
+            }
+        };
+
         urls.forEach((url, index) => {
             const slide = document.createElement('div');
             slide.className = slideClassName;
@@ -229,58 +256,25 @@ function setupSlider(sliderId, slideClassName, dotsId, slideIndexVarName) {
             slideElements.push(slide);
             const dot = document.createElement('span');
             dot.className = 'dot';
-            dot.onclick = () => window[`current${slideIndexVarName}Slide`](index + 1);
+            dot.onclick = () => showSlidesFn(index + 1, false);
             dotsContainer.appendChild(dot);
         });
+
         const prevArrow = document.createElement('a');
         prevArrow.className = 'prev';
-        prevArrow.onclick = () => window[`plus${slideIndexVarName}Slides`](-1);
+        prevArrow.onclick = () => showSlidesFn(-1, true);
         prevArrow.innerHTML = '❮';
         slider.appendChild(prevArrow);
+
         const nextArrow = document.createElement('a');
         nextArrow.className = 'next';
-        nextArrow.onclick = () => window[`plus${slideIndexVarName}Slides`](1);
+        nextArrow.onclick = () => showSlidesFn(1, true);
         nextArrow.innerHTML = '❯';
         slider.appendChild(nextArrow);
-        const showSlidesFn = createShowSlidesFn(slideElements, dotsContainer, slideIndexVarName);
-        window[`show${slideIndexVarName}Slides`] = showSlidesFn;
-        showSlidesFn(1);
+
+        showSlidesFn(1, false);
     };
 }
-
-function createShowSlidesFn(slides, dotsContainer, slideIndexVarName) {
-    return function (n) {
-        let slideIndex = n;
-        if (slideIndex > slides.length) { slideIndex = 1; }
-        if (slideIndex < 1) { slideIndex = slides.length; }
-
-        slides.forEach(slide => {
-            const video = slide.querySelector('video');
-            if (video) video.pause();
-            const iframe = slide.querySelector('iframe');
-            if (iframe) iframe.src = iframe.src;
-            slide.style.display = "none";
-        });
-
-        let dots = dotsContainer.getElementsByClassName("dot");
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-        window[slideIndexVarName] = slideIndex;
-    };
-}
-
-window.plusImgSlides = (n) => window.showImgSlides(imageSlideIndex += n);
-window.currentImgSlide = (n) => window.showImgSlides(imageSlideIndex = n);
-window.plusVideoSlides = (n) => window.showVideoSlides(videoSlideIndex += n);
-window.currentVideoSlide = (n) => window.showVideoSlides(videoSlideIndex = n);
-window.plusFeedbackSlides = (n) => window.showFeedbackSlides(feedbackSlideIndex += n);
-window.currentFeedbackSlide = (n) => window.showFeedbackSlides(feedbackSlideIndex = n);
-window.plusOrderSlides = (n) => window.showOrderSlides(orderSlideIndex += n);
-window.currentOrderSlide = (n) => window.showOrderSlides(orderSlideIndex = n);
 
 
 let DELIVERY_FEE = 0;
@@ -330,8 +324,8 @@ async function fetchAndApplyInitialData() {
         const { product, settings, allOrders } = data;
 
         // Setup Product Sliders
-        window.renderImageSlider = setupSlider('imageSlider', 'slider-image', 'imageDots', 'Img');
-        const renderVideoSlider = setupSlider('videoSlider', 'slider-video', 'videoDots', 'Video');
+        window.renderImageSlider = setupSlider('imageSlider', 'slider-image', 'imageDots');
+        const renderVideoSlider = setupSlider('videoSlider', 'slider-video', 'videoDots');
         if (product) {
             document.getElementById('productTitle').innerText = product.title || "Default Title";
             
