@@ -491,7 +491,10 @@ switch ($action) {
         // Update or Insert the single product
         $conn->query("DELETE FROM products"); // Clear old products since it's a single-product site
         $stmt = $conn->prepare("INSERT INTO products (title, imageUrls, videoUrls, createdAt) VALUES (?, ?, ?, NOW())");
-        $imageUrlsJson = json_encode(array_values(array_filter(array_map('trim', explode(',', $_POST['product-images-urls'])))));
+        $images56 = array_values(array_filter(array_map('trim', explode(',', $_POST['product-images-urls-56'] ?? ''))));
+        $images32 = array_values(array_filter(array_map('trim', explode(',', $_POST['product-images-urls-32'] ?? ''))));
+        $images99 = array_values(array_filter(array_map('trim', explode(',', $_POST['product-images-urls-99'] ?? ''))));
+        $imageUrlsJson = json_encode(['56' => $images56, '32' => $images32, '99' => $images99]);
         $videoUrlsJson = json_encode(array_values(array_filter(array_map('trim', explode(',', $_POST['product-video-urls'])))));
         $stmt->bind_param("sss", $_POST['product-title'], $imageUrlsJson, $videoUrlsJson);
         $stmt->execute();

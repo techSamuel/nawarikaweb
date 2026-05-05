@@ -328,15 +328,29 @@ async function fetchAndApplyInitialData() {
         const { product, settings, allOrders } = data;
 
         // Setup Product Sliders
-        const renderImageSlider = setupSlider('imageSlider', 'slider-image', 'imageDots', 'Img');
+        window.renderImageSlider = setupSlider('imageSlider', 'slider-image', 'imageDots', 'Img');
         const renderVideoSlider = setupSlider('videoSlider', 'slider-video', 'videoDots', 'Video');
         if (product) {
             document.getElementById('productTitle').innerText = product.title || "Default Title";
-            // The backend now sends arrays directly, no need for JSON.parse
-            renderImageSlider(product.imageUrls);
+            
+            window.productImages = product.imageUrls || {};
+            let initialImages = [];
+            if (Array.isArray(window.productImages)) {
+                initialImages = window.productImages;
+                window.productImages = {
+                    '56': window.productImages,
+                    '32': window.productImages,
+                    '99': window.productImages
+                };
+            } else {
+                const defaultQty = document.querySelector('input[name="quantity"]:checked').value;
+                initialImages = window.productImages[defaultQty] || [];
+            }
+            
+            window.renderImageSlider(initialImages);
             renderVideoSlider(product.videoUrls);
         } else {
-            renderImageSlider([]);
+            window.renderImageSlider([]);
             renderVideoSlider([]);
         }
 
@@ -684,6 +698,10 @@ function updatePrice() {
         package56Details.classList.add('hidden');
         package32Details.classList.add('hidden');
         if (package99Details) package99Details.classList.add('hidden');
+    }
+
+    if (window.productImages && window.renderImageSlider) {
+        window.renderImageSlider(window.productImages[selectedQuantity] || []);
     }
 }
 

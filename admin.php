@@ -197,10 +197,16 @@
                             <input type="text" id="product-title" class="w-full p-2 border rounded">
                         </div>
                         <div>
-                            <label for="product-images-urls" class="block font-medium">Image URLs
-                                (comma-separated)</label>
-                            <input type="text" id="product-images-urls" class="w-full p-2 border rounded"
-                                placeholder="https://link1, https://link2">
+                            <label for="product-images-urls-56" class="block font-medium">56 pis Image URLs (comma-separated)</label>
+                            <input type="text" id="product-images-urls-56" name="product-images-urls-56" class="w-full p-2 border rounded" placeholder="https://link1, https://link2">
+                        </div>
+                        <div>
+                            <label for="product-images-urls-32" class="block font-medium">32 pis Image URLs (comma-separated)</label>
+                            <input type="text" id="product-images-urls-32" name="product-images-urls-32" class="w-full p-2 border rounded" placeholder="https://link1, https://link2">
+                        </div>
+                        <div>
+                            <label for="product-images-urls-99" class="block font-medium">99 Names Image URLs (comma-separated)</label>
+                            <input type="text" id="product-images-urls-99" name="product-images-urls-99" class="w-full p-2 border rounded" placeholder="https://link1, https://link2">
                         </div>
                         <div>
                             <label for="product-video-urls" class="block font-medium">Video URLs
@@ -1250,7 +1256,16 @@ if (bulkOrderForm) {
 
                 if (product) {
                     document.getElementById('product-title').value = product.title || '';
-                    document.getElementById('product-images-urls').value = (product.imageUrls || []).join(', ');
+                    const images = product.imageUrls || {};
+                    if (Array.isArray(images)) {
+                        document.getElementById('product-images-urls-56').value = images.join(', ');
+                        document.getElementById('product-images-urls-32').value = images.join(', ');
+                        document.getElementById('product-images-urls-99').value = images.join(', ');
+                    } else {
+                        document.getElementById('product-images-urls-56').value = (images['56'] || []).join(', ');
+                        document.getElementById('product-images-urls-32').value = (images['32'] || []).join(', ');
+                        document.getElementById('product-images-urls-99').value = (images['99'] || []).join(', ');
+                    }
                     document.getElementById('product-video-urls').value = (product.videoUrls || []).join(', ');
                 }
 
@@ -1304,9 +1319,10 @@ if (bulkOrderForm) {
             formData.append('enable-small-size', document.getElementById('enable-small-size').checked ? '1' : '0');
             formData.append('enable-big-size', document.getElementById('enable-big-size').checked ? '1' : '0');
 
-            // Add form field names that are used in the PHP file
             formData.append('product-title', document.getElementById('product-title').value);
-            formData.append('product-images-urls', document.getElementById('product-images-urls').value);
+            formData.append('product-images-urls-56', document.getElementById('product-images-urls-56').value);
+            formData.append('product-images-urls-32', document.getElementById('product-images-urls-32').value);
+            formData.append('product-images-urls-99', document.getElementById('product-images-urls-99').value);
             formData.append('product-video-urls', document.getElementById('product-video-urls').value);
             formData.append('whatsapp-number', document.getElementById('whatsapp-number').value);
             formData.append('messenger-page-id', document.getElementById('messenger-page-id').value);
