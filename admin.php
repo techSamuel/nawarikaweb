@@ -234,6 +234,12 @@ Example item 1
 Example item 2"></textarea>
                         </div>
                         <div>
+                            <label for="package-99-full-list" class="block font-medium">Package 99 Full List (First line is title, then one item per line)</label>
+                            <textarea id="package-99-full-list" rows="10" class="w-full p-2 border rounded" placeholder="প্যাকেজ ৯৯ (৯৯ টি আল্লাহর নাম)
+Example item 1
+Example item 2"></textarea>
+                        </div>
+                        <div>
                             <label for="small-size-image-url" class="block font-medium">Small Size Image URL</label>
                             <input type="text" id="small-size-image-url" class="w-full p-2 border rounded"
                                 placeholder="https://link_to_small_image">
@@ -264,6 +270,14 @@ Example item 2"></textarea>
                         <div>
                             <label for="price-large-32" class="block font-medium">Large - 32 pcs</label>
                             <input type="number" id="price-large-32" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label for="price-small-99" class="block font-medium">Small - 99 pcs</label>
+                            <input type="number" id="price-small-99" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label for="price-large-99" class="block font-medium">Large - 99 pcs</label>
+                            <input type="number" id="price-large-99" class="w-full p-2 border rounded">
                         </div>
                         <div>
                             <label for="delivery-charge" class="block font-medium">Delivery Charge</label>
@@ -1246,10 +1260,13 @@ if (bulkOrderForm) {
                     document.getElementById('main-description-text').value = settings.mainDescription || '';
                     document.getElementById('package-56-full-list').value = settings.package56List || '';
                     document.getElementById('package-32-full-list').value = settings.package32List || '';
+                    document.getElementById('package-99-full-list').value = settings.package99List || '';
                     document.getElementById('price-small-56').value = settings.priceSmall56 || '';
                     document.getElementById('price-large-56').value = settings.priceLarge56 || '';
                     document.getElementById('price-small-32').value = settings.priceSmall32 || '';
                     document.getElementById('price-large-32').value = settings.priceLarge32 || '';
+                    document.getElementById('price-small-99').value = settings.priceSmall99 || '';
+                    document.getElementById('price-large-99').value = settings.priceLarge99 || '';
                     document.getElementById('delivery-charge').value = settings.deliveryCharge || '';
                     document.getElementById('small-size-image-url').value = settings.smallSizeImageUrl || '';
                     document.getElementById('large-size-image-url').value = settings.largeSizeImageUrl || '';
@@ -1296,10 +1313,13 @@ if (bulkOrderForm) {
             formData.append('main-description-text', document.getElementById('main-description-text').value);
             formData.append('package-56-full-list', document.getElementById('package-56-full-list').value);
             formData.append('package-32-full-list', document.getElementById('package-32-full-list').value);
+            formData.append('package-99-full-list', document.getElementById('package-99-full-list').value);
             formData.append('price-small-56', document.getElementById('price-small-56').value);
             formData.append('price-large-56', document.getElementById('price-large-56').value);
             formData.append('price-small-32', document.getElementById('price-small-32').value);
             formData.append('price-large-32', document.getElementById('price-large-32').value);
+            formData.append('price-small-99', document.getElementById('price-small-99').value);
+            formData.append('price-large-99', document.getElementById('price-large-99').value);
             formData.append('delivery-charge', document.getElementById('delivery-charge').value);
             formData.append('small-size-image-url', document.getElementById('small-size-image-url').value);
             formData.append('large-size-image-url', document.getElementById('large-size-image-url').value);

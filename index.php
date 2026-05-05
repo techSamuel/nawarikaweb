@@ -266,6 +266,10 @@ $conn->close();
                     <div id="package-32-details" class="hidden">
                         <?php renderList($settings['package32List'] ?? '', 'package-32-title', 'package-32-ul', 'package-32-subtitle'); ?>
                     </div>
+
+                    <div id="package-99-details" class="hidden">
+                        <?php renderList($settings['package99List'] ?? '', 'package-99-title', 'package-99-ul', 'package-99-subtitle'); ?>
+                    </div>
                 </div>
 
                 <!-- Product Options -->
@@ -303,6 +307,8 @@ $conn->close();
                             <label for="quantity_32" class="radio-label text-center w-full">৩২ পিস</label>
                             <input type="radio" name="quantity" id="quantity_56" value="56" class="hidden">
                             <label for="quantity_56" class="radio-label text-center w-full">৫৬ পিস</label>
+                            <input type="radio" name="quantity" id="quantity_99" value="99" class="hidden">
+                            <label for="quantity_99" class="radio-label text-center w-full">৯৯ টি নাম</label>
                         </div>
                     </div>
                 </div>

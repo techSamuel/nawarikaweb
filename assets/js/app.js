@@ -286,7 +286,9 @@ let prices = {
     small_56: 300,
     big_56: 400,
     small_32: 200,
-    big_32: 250
+    big_32: 250,
+    small_99: 250,
+    big_99: 300
 };
 let sizeImageUrls = {
     small: '',
@@ -352,11 +354,14 @@ async function fetchAndApplyInitialData() {
 
             generateList(settings.package56List, 'package-56-title', 'package-56-ul', 'package-56-subtitle');
             generateList(settings.package32List, 'package-32-title', 'package-32-ul', 'package-32-subtitle');
+            generateList(settings.package99List, 'package-99-title', 'package-99-ul', 'package-99-subtitle');
 
             prices.small_56 = Number(settings.priceSmall56) || prices.small_56;
             prices.big_56 = Number(settings.priceLarge56) || prices.big_56;
             prices.small_32 = Number(settings.priceSmall32) || prices.small_32;
             prices.big_32 = Number(settings.priceLarge32) || prices.big_32;
+            prices.small_99 = Number(settings.priceSmall99) || prices.small_99;
+            prices.big_99 = Number(settings.priceLarge99) || prices.big_99;
             DELIVERY_FEE = (settings.deliveryCharge !== undefined && settings.deliveryCharge !== null && settings.deliveryCharge !== '') ? Number(settings.deliveryCharge) : DELIVERY_FEE;
 
             sizeImageUrls.small = settings.smallSizeImageUrl || '';
@@ -646,7 +651,7 @@ function updatePrice() {
 
     const sizeLabelEl = document.querySelector(`label[for="size_${selectedSize}"]`);
     const sizeText = sizeLabelEl ? sizeLabelEl.textContent : (selectedSize === 'small' ? 'ছোট' : 'বড়');
-    const quantityText = `${selectedQuantity} পিস`;
+    const quantityText = selectedQuantity === '99' ? '৯৯ টি নাম' : `${selectedQuantity} পিস`;
     selectedProductEl.value = `${sizeText} - ${quantityText}`;
     productPriceInputEl.value = productPrice;
     totalPriceInputEl.value = total;
@@ -661,16 +666,24 @@ function updatePrice() {
 
     const package56Details = document.getElementById('package-56-details');
     const package32Details = document.getElementById('package-32-details');
+    const package99Details = document.getElementById('package-99-details');
 
     if (selectedQuantity === '56') {
         package56Details.classList.remove('hidden');
         package32Details.classList.add('hidden');
+        if (package99Details) package99Details.classList.add('hidden');
     } else if (selectedQuantity === '32') {
         package32Details.classList.remove('hidden');
         package56Details.classList.add('hidden');
+        if (package99Details) package99Details.classList.add('hidden');
+    } else if (selectedQuantity === '99') {
+        if (package99Details) package99Details.classList.remove('hidden');
+        package56Details.classList.add('hidden');
+        package32Details.classList.add('hidden');
     } else {
         package56Details.classList.add('hidden');
         package32Details.classList.add('hidden');
+        if (package99Details) package99Details.classList.add('hidden');
     }
 }
 
@@ -708,6 +721,8 @@ spinBtn.addEventListener('click', () => {
         validSlots = [0, 1, 2, 3];
     } else if (lastOrderedSize === 'big' && lastOrderedQuantity === '56') {
         validSlots = [0, 1, 2, 3, 4];
+    } else if (lastOrderedQuantity === '99') {
+        validSlots = [0, 1, 2, 3, 4, 5];
     } else {
         validSlots = [0, 1, 2, 3, 4];
     }
