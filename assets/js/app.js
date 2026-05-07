@@ -201,7 +201,7 @@ function setupSlider(sliderId, slideClassName, dotsId) {
         slider.style.display = 'block';
         dotsContainer.style.display = 'block';
 
-        const showSlidesFn = function(n, isRelative = false) {
+        const showSlidesFn = function (n, isRelative = false) {
             if (isRelative) {
                 currentSlideIndex += n;
             } else {
@@ -280,10 +280,10 @@ function setupSlider(sliderId, slideClassName, dotsId) {
 let DELIVERY_FEE = 0;
 let prices = {
     small_56: 300,
-    big_56: 400,
+    big_56: 440,
     small_32: 200,
-    big_32: 250,
-    small_99: 250,
+    big_32: 330,
+    small_99: 200,
     big_99: 300
 };
 let sizeImageUrls = {
@@ -328,7 +328,7 @@ async function fetchAndApplyInitialData() {
         const renderVideoSlider = setupSlider('videoSlider', 'slider-video', 'videoDots');
         if (product) {
             document.getElementById('productTitle').innerText = product.title || "Default Title";
-            
+
             window.productImages = product.imageUrls || {};
             let initialImages = [];
             if (Array.isArray(window.productImages)) {
@@ -342,7 +342,7 @@ async function fetchAndApplyInitialData() {
                 const defaultQty = document.querySelector('input[name="quantity"]:checked').value;
                 initialImages = window.productImages[defaultQty] || [];
             }
-            
+
             window.renderImageSlider(initialImages);
             renderVideoSlider(product.videoUrls);
         } else {
@@ -703,13 +703,13 @@ function updatePrice() {
     const sliderBtn32 = document.getElementById('btn-slider-32');
     const sliderBtn56 = document.getElementById('btn-slider-56');
     const sliderBtn99 = document.getElementById('btn-slider-99');
-    
+
     if (sliderBtn32 && sliderBtn56 && sliderBtn99) {
         [sliderBtn32, sliderBtn56, sliderBtn99].forEach(btn => {
             btn.classList.remove('bg-green-600', 'text-white');
             btn.classList.add('bg-gray-200', 'text-gray-800');
         });
-        
+
         if (selectedQuantity === '32') {
             sliderBtn32.classList.remove('bg-gray-200', 'text-gray-800');
             sliderBtn32.classList.add('bg-green-600', 'text-white');
