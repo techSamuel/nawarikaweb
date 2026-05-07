@@ -186,18 +186,17 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/custom-styles.css">
 </head>
 
-<body class="bg-gray-50 text-gray-800">
+<body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MXKPWCPH" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
 
-        <header class="text-center mb-8">
-            <!-- SEO FIX: H1 tag is now rendered by PHP with the real product title -->
-            <h1 id="productTitle" class="text-3xl md:text-4xl font-bold text-green-800">
+        <header class="site-header text-center">
+            <h1 id="productTitle" class="text-3xl md:text-4xl font-bold">
                 <?php echo $productTitle; ?>
             </h1>
-            <p class="text-lg md:text-xl mt-2 text-gray-600">ইসলামিক দোয়া স্টিকার কার্ডের সাথে প্রতিদিন আল্লাহকে স্মরণ
+            <p class="text-lg md:text-xl mt-2">ইসলামিক দোয়া স্টিকার কার্ডের সাথে প্রতিদিন আল্লাহকে স্মরণ
                 করুন।</p>
         </header>
 
@@ -255,8 +254,8 @@ $conn->close();
                 </section>
             </div>
 
-            <div id="order-section" class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 text-green-700">কেন আমাদের দোয়া স্টিকার কিনবেন?</h2>
+            <div id="order-section" class="card card-premium p-6">
+                <h2 class="section-title text-2xl mb-4">কেন আমাদের দোয়া স্টিকার কিনবেন?</h2>
 
                 <!-- SEO FIX: Product description and lists are now rendered by PHP -->
                 <div id="productDescription" class="text-gray-700 space-y-3">
@@ -319,7 +318,7 @@ $conn->close();
                 </div>
 
                 <!-- Price section - Populated with default data by PHP -->
-                <div class="my-6 text-center bg-gray-100 p-4 rounded-lg space-y-2">
+                <div class="price-section my-6 space-y-2">
                     <p class="text-lg text-gray-800">দাম: <span id="dynamicPrice"
                             class="font-semibold"><?php echo $priceSmall32; ?></span> টাকা</p>
                     <p id="deliveryFeeRow" class="text-lg text-gray-800 flex flex-col items-center gap-1">
@@ -335,7 +334,7 @@ $conn->close();
                         <?php endif; ?>
                     </p>
                     <hr class="border-gray-300">
-                    <p class="text-2xl font-bold text-red-600">সর্বমোট: <span
+                    <p class="price-total">সর্বমোট: <span
                             id="totalPrice"><?php echo $totalPrice; ?></span> টাকা</p>
                 </div>
 
@@ -347,20 +346,19 @@ $conn->close();
                         value="<?php echo $priceSmall32; ?>">
                     <input type="hidden" id="totalPriceInput" name="totalPriceInput" value="<?php echo $totalPrice; ?>">
 
-                    <h3 class="text-xl font-semibold text-center bg-gray-100 p-2 rounded">অর্ডার করতে নিচের ফর্মটি পূরণ
-                        করুন</h3>
+                    <h3 class="order-form-title">📦 অর্ডার করতে নিচের ফর্মটি পূরণ করুন</h3>
                     <div>
                         <label for="name" class="block mb-1 font-medium">আপনার নাম <span
                                 class="text-red-500">*</span></label>
                         <input type="text" id="name" name="name"
-                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                            class="form-input"
                             required>
                     </div>
                     <div class="relative">
                         <label for="address" class="block mb-1 font-medium">আপনার সম্পূর্ণ ঠিকানা <span
                                 class="text-red-500">*</span></label>
                         <textarea id="address" name="address" rows="3"
-                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                            class="form-input"
                             placeholder="বাসা/হোল্ডিং, রোড, এলাকা, থানা, জেলা" required></textarea>
 
                         <div id="addressSuggestions"
@@ -371,18 +369,15 @@ $conn->close();
                         <label for="phone" class="block mb-1 font-medium">আপনার ফোন নম্বর <span
                                 class="text-red-500">*</span></label>
                         <input type="tel" id="phone" name="phone"
-                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
+                            class="form-input"
                             required>
                     </div>
                     <div id="optional-field-container">
                         <label for="optional-note" class="block mb-1 font-medium">বিশেষ দ্রষ্টব্য (Optional)</label>
                         <textarea id="optional-note" name="note" rows="2"
-                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"></textarea>
+                            class="form-input"></textarea>
                     </div>
-                    <button type="submit"
-                        class="w-full bg-green-700 text-white font-bold py-3 px-4 rounded-md hover:bg-green-800 transition duration-300">
-                        অর্ডার কনফার্ম করুন
-                    </button>
+                    <button type="submit" class="submit-btn">✅ অর্ডার কনফার্ম করুন</button>
                 </form>
 
                 <!-- Alert Box -->
@@ -424,7 +419,7 @@ $conn->close();
 
 
         <!-- Order Tracking -->
-        <section id="order-tracking-section" class="mt-12 p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
+        <section id="order-tracking-section" class="tracking-section mt-12 max-w-4xl mx-auto">
             <h3 class="text-xl font-semibold text-center mb-4 text-gray-800">আপনার অর্ডার ট্র্যাক করুন</h3>
             <p class="text-center text-gray-600 mb-6">আপনার অর্ডার সম্পর্কিত তথ্য দেখতে বা আপনার ঠিকানা পরিবর্তন করতে
                 অর্ডার নাম্বার বা ফোন নাম্বার দিয়ে অনুসন্ধান করুন।</p>
@@ -443,7 +438,7 @@ $conn->close();
         </section>
 
 
-        <footer class="text-center mt-10 pt-6 border-t">
+        <footer class="site-footer">
             <h3 class="text-xl font-bold mb-2">ডেলিভারি সংক্রান্ত তথ্য</h3>
             <?php if ($deliveryFee === 0): ?>
                 <p class="text-green-600 font-semibold text-lg">🚚 সারা বাংলাদেশে ফ্রি হোম ডেলিভারি</p>
